@@ -9,7 +9,8 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     items = session.get_items()
-    return render_template("index.html", items=items)
+    sortedItems = sorted(items, key=lambda item: item['status'], reverse=True)
+    return render_template("index.html", items=sortedItems)
 
 @app.route('/item', methods=['POST'])
 def add_item():
