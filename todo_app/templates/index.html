@@ -15,6 +15,10 @@
           <li>{{ item.title }} - {{ item.status }}</li>
         {% endfor %}
       </ul>
+      <form method="post" action="/item">
+        <input type="text" name="item_title" placeholder="Add new item">
+        <input type="submit" value="Add">
+      </form>
     </div>
   </div>
 {% endblock %}
