@@ -12,7 +12,14 @@
       <h2>Items</h2>
       <ul class="list-group mb-4">
         {% for item in items %}
-          <li>{{ item.title }} - {{ item.status }}</li>
+          <form method="post" action="/items/{{ item.id }}">
+            <li>
+              {{ item.title }} - {{ item.status }}
+              {% if item.status != 'Completed' %}
+                <input type="submit" value="Complete">
+              {% endif %}
+            </li>
+          </form>
         {% endfor %}
       </ul>
       <form method="post" action="/item">
