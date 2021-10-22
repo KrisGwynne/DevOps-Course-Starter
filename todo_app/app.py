@@ -24,3 +24,8 @@ def update_item(id):
     item['status'] = 'Completed'
     session.save_item(item)
     return redirect('/')
+
+@app.route('/items/delete/<id>', methods=['POST'])
+def delete_item(id):
+    session.remove_item(id)
+    return redirect('/')
