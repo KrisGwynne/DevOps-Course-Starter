@@ -8,27 +8,44 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
-        {% for item in items %}
-          <li>
-            {{ item.title }} - {{ item.status }}
-            {% if item.status != 'Completed' %}
-              <form method="post" action="/items/{{ item.id }}">
-                <input type="submit" value="Complete">
-              </form>
-            {% endif %}
-            <form method="post" action="/items/delete/{{ item.id }}">
-              <input type="submit" value="Delete">
-            </form>
-          </li>
-        {% endfor %}
-      </ul>
-      <form method="post" action="/item">
-        <input type="text" name="item_title" placeholder="Add new item">
-        <input type="submit" value="Add">
-      </form>
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          {% for item in items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {% if item.status == 'Completed' %}
+                <strike>{{ item.title }}</strike>
+              {% else %}
+                {{ item.title }}
+              {% endif %}
+              <div class="btn-group">
+                {% if item.status != 'Completed' %}
+                  <form method="post" action="/items/{{ item.id }}">
+                    <input type="submit" value="Complete" class="btn btn-success btn-sm m-1">
+                  </form>
+                {% endif %}
+                <form method="post" action="/items/delete/{{ item.id }}">
+                  <input type="submit" value="Delete" class="btn btn-danger btn-sm m-1">
+                </form>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mt-4">
+        <h3>Add new item</h3>
+        <form method="post" action="/item">
+          <div class="form-row">
+            <div class="col-10">
+              <input type="text" class="form-control" name="item_title" placeholder="Item title">
+            </div>
+            <div class="col-2">
+              <input type="submit" value="Add" class="btn btn-success">
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}
