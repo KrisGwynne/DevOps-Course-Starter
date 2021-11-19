@@ -14,18 +14,16 @@
         <ul class="list-group list-group-flush">
           {% for item in items %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              {% if item.status == 'Completed' %}
-                <strike>{{ item.title }}</strike>
-              {% else %}
+              <span {% if item.status == 'Completed' %} style="text-decoration: line-through" {% endif %}>
                 {{ item.title }}
-              {% endif %}
+              </span>
               <div class="btn-group">
                 {% if item.status != 'Completed' %}
-                  <form method="post" action="/items/{{ item.id }}">
+                  <form method="post" action="{{ url_for('update_item', id=item.id)}}">
                     <input type="submit" value="Complete" class="btn btn-success btn-sm m-1">
                   </form>
                 {% endif %}
-                <form method="post" action="/items/delete/{{ item.id }}">
+                <form method="post" action="{{ url_for('delete_item', id=item.id)}}">
                   <input type="submit" value="Delete" class="btn btn-danger btn-sm m-1">
                 </form>
               </div>
@@ -38,7 +36,7 @@
         <form method="post" action="/item">
           <div class="form-row">
             <div class="col-10">
-              <input type="text" class="form-control" name="item_title" placeholder="Item title">
+              <input type="text" class="form-control" name="item_title" placeholder="Item title" required>
             </div>
             <div class="col-2">
               <input type="submit" value="Add" class="btn btn-success">
