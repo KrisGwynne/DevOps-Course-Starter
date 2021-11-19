@@ -16,7 +16,7 @@ def index():
 @app.route('/item', methods=['POST'])
 def add_item():
     title = request.form.get("item_title")
-    session.add_item(title)
+    trello.add_item(title)
     return redirect("/")
 
 @app.route('/items/<id>', methods=['POST'])
