@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request
 import  todo_app.data.session_items as session
+import todo_app.data.trello_items as trello
 from todo_app.flask_config import Config
 
 app = Flask(__name__)
@@ -8,8 +9,8 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    items = session.get_items()
-    sorted_items = sorted(items, key=lambda item: item['status'], reverse=True)
+    items = trello.get_items()
+    sorted_items = sorted(items, key=lambda item: item.status, reverse=True)
     return render_template("index.html", items=sorted_items)
 
 @app.route('/item', methods=['POST'])
