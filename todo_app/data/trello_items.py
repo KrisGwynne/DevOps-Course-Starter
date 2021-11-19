@@ -10,7 +10,7 @@ def get_items():
     params = _API_QUERY_PARAMS | {'cards': 'open'}
     # TODO: Handle bad api response
     res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=params)
-    return [Card(card, list['name']) for list in res.json() for card in list['cards']]
+    return [Card.from_trello_card(card, list) for list in res.json() for card in list['cards']]
 
 def add_item(title):
     # Get the To-Do list id
