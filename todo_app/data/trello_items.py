@@ -14,12 +14,23 @@ def get_items():
 
 def add_item(title):
     # Get the To-Do list id
-    # TODO: handle api failure
-    res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=_API_QUERY_PARAMS)
-    list_id = next(list for list in res.json() if list['name'] == "To Do")["id"]
+    list_id = get_list_id('To Do')
     
     # Add card to the To-Do list
     params = _API_QUERY_PARAMS | {'name': title, 'idList': list_id}
     # TODO: handle api failure
     requests.post(f'{_BASE_URL}/1/cards', params=params)
-    
+
+def complete_item(id):
+    # Get the Done list id
+    list_id = get_list_id('Done')
+
+    # Move card to Done list
+    params = _API_QUERY_PARAMS | {'idList': list_id}
+    requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
+
+
+def get_list_id(list_name):
+    # TODO: handle api failure
+    res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=_API_QUERY_PARAMS)
+    return next(list for list in res.json() if list['name'] == list_name)["id"]

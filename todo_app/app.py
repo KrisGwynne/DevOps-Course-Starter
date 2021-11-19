@@ -21,9 +21,7 @@ def add_item():
 
 @app.route('/items/<id>', methods=['POST'])
 def update_item(id):
-    item = session.get_item(id)
-    item['status'] = 'Completed'
-    session.save_item(item)
+    trello.complete_item(id)
     return redirect('/')
 
 @app.route('/items/delete/<id>', methods=['POST'])
