@@ -38,6 +38,12 @@ def complete_item(id):
     if not res.ok:
         raise ApiException("Error completing to-do item")
 
+def delete_item(id):
+    res = requests.delete(f'{_BASE_URL}/1/cards/{id}', params=_API_QUERY_PARAMS)
+
+    if not res.ok:
+        raise ApiException("Error deleting to-do item")
+
 
 def get_list_id(list_name):
     res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=_API_QUERY_PARAMS)

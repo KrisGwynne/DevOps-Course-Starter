@@ -44,7 +44,7 @@ def update_item(id):
 @app.route('/items/delete/<id>', methods=['POST'])
 def delete_item(id):
     try:
-        session.remove_item(id)
+        trello.delete_item(id)
         flash("Deleted to-do item", "success")
     except ApiException as err:
         flash(err.message, "error")
