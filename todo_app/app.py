@@ -1,6 +1,5 @@
-from flask import Flask, redirect, render_template, request, jsonify
-from flask.helpers import flash, make_response
-import  todo_app.data.session_items as session
+from flask import Flask, redirect, render_template, request
+from flask.helpers import flash
 import todo_app.data.trello_items as trello
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
