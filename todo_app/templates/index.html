@@ -40,11 +40,11 @@
         <ul class="list-group list-group-flush">
           {% for item in view_model.items %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span {% if item.status == 'Completed' %} style="text-decoration: line-through" {% endif %}>
+              <span {% if item.status == 'Done' %} style="text-decoration: line-through" {% endif %}>
                 {{ item.title }}
               </span>
               <div class="btn-group">
-                {% if item.status != 'Completed' %}
+                {% if item.status != 'Done' %}
                   <form method="post" action="{{ url_for('update_item', id=item.id)}}">
                     <input type="submit" value="Complete" class="btn btn-success btn-sm m-1">
                   </form>
