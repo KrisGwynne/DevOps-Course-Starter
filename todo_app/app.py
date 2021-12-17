@@ -32,8 +32,8 @@ def add_item():
 
     return redirect("/")
 
-@app.route('/items/<id>', methods=['POST'])
-def update_item(id):
+@app.route('/items/<id>/complete', methods=['POST'])
+def complete_item(id):
     try:
         trello.complete_item(id)
         flash("Completed to-do item", "success")

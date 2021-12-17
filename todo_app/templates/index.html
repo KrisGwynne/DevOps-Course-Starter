@@ -60,7 +60,7 @@
                   {{ item.title }}
                 </span>
                 <div class="btn-group">
-                    <form method="post" action="{{ url_for('update_item', id=item.id)}}">
+                    <form method="post" action="{{ url_for('complete_item', id=item.id)}}">
                       <input type="submit" value="Complete" class="btn btn-success btn-sm m-1">
                     </form>
                   <form method="post" action="{{ url_for('delete_item', id=item.id)}}">
