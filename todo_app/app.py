@@ -31,6 +31,17 @@ def add_item():
         flash(err.message, "error")
 
     return redirect("/")
+    return render_template("index.html", view_model=item_view_model)
+
+@app.route('/items/<id>/start', methods=['POST'])
+def start_item(id):
+    try:
+        trello.start_item(id)
+        flash("STarted to-do item", "success")
+    except ApiException as err:
+        flash(err.message, "error")
+
+    return redirect('/')
 
 @app.route('/items/<id>/complete', methods=['POST'])
 def complete_item(id):

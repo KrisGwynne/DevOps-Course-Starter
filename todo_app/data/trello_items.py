@@ -27,6 +27,15 @@ def add_item(title):
     if not res.ok:
         raise ApiException("Error adding a new to-do item")
 
+def start_item(id):
+    list_id = get_list_id('Doing')
+
+    params = _API_QUERY_PARAMS | {'idList': list_id}
+    res = requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
+
+    if not res.ok:
+        raise ApiException('Error starting to-do item')
+
 def complete_item(id):
     # Get the Done list id
     list_id = get_list_id('Done')
