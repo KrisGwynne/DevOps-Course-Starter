@@ -3,6 +3,7 @@ from flask.helpers import flash
 import todo_app.data.trello_items as trello
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
+from todo_app.view_models.ItemViewModel import ItemViewModel
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -17,7 +18,8 @@ def index():
         flash(err.message, "error")
 
     sorted_items = sorted(items, key=lambda item: item.status, reverse=True)
-    return render_template("index.html", items=sorted_items)
+    item_view_model = ItemViewModel(sorted_items)
+    return render_template("index.html", view_model=item_view_model)
 
 @app.route('/item', methods=['POST'])
 def add_item():
