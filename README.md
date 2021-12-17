@@ -51,3 +51,14 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Testing
+The repo contains a testing directory under `./tests`, using the pytest library. To run the tests ensure you are in the tests directory and run:
+```bash
+$ poetry run pytest
+```
+
+To run an individual test run the above command with the path to the test and the name of the test eg:
+```bash
+$ poetry run pytest view_models/item_view_model_test.py -k 'test_getting_to_do_items_returns_only_to_do_items'
+```
