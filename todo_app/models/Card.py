@@ -6,5 +6,4 @@ class Card:
 
     @classmethod
     def from_trello_card(cls, card, list):
-        status = "Done" if list['name'] == "Done" else "To Do"
-        return cls(card['id'], card['name'], status)
+        return cls(card['id'], card['name'], list['name'])
