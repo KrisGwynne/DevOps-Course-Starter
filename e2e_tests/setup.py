@@ -6,20 +6,14 @@ from todo_app import app
 from selenium import webdriver
 from dotenv import load_dotenv, find_dotenv
 
-from todo_app.models.ApiException import ApiException
-
-
 def create_e2e_trello_board():
     _API_QUERY_PARAMS = {'key': os.environ.get("API_KEY"), 'token': os.environ.get("API_TOKEN")}
     board_name = 'e2e_board'
     organisation_id = os.environ.get("ORGANISATION_ID")
     params = _API_QUERY_PARAMS | {'name': board_name, 'idOrganization': organisation_id}
-    res1 = requests.post('https://api.trello.com/1/boards', params=params)
+    requests.post('https://api.trello.com/1/boards', params=params)
 
     res = requests.get(f'https://api.trello.com/1/organizations/{organisation_id}/boards', params=_API_QUERY_PARAMS)
-
-    if not res1.ok:
-        raise ApiException(res1.status_code)
 
     return next(board['id'] for board in res.json() if board['name'] == board_name)
 
@@ -33,7 +27,7 @@ def app_with_temp_board():
     load_dotenv(file_path, override=True)
     # Create the new board & update the board id environment variable
     board_id = create_e2e_trello_board()
-    os.environ['TRELLO_BOARD_ID'] = board_id
+    os.environ['BOARD_ID'] = board_id
     # construct the new application
     application = app.create_app()
     # start the app in its own thread.
@@ -48,4 +42,5 @@ def app_with_temp_board():
 @pytest.fixture(scope="module")
 def driver():
     with webdriver.Firefox() as driver:
+        driver.implicitly_wait(10)
         yield driver
