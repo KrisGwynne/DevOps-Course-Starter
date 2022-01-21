@@ -38,7 +38,7 @@ def create_app():
     def start_item(id):
         try:
             trello.start_item(id)
-            flash("STarted to-do item", "success")
+            flash("Started to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
 
