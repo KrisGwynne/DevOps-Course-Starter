@@ -5,10 +5,11 @@ from todo_app.models.Card import Card
 
 _BASE_URL = "https://api.trello.com"
 
-_API_QUERY_PARAMS = {'key': os.getenv("API_KEY"), 'token': os.getenv("API_TOKEN")}
+def get_api_query_params():
+    return {'key': os.getenv("API_KEY"), 'token': os.getenv("API_TOKEN")}
 
 def get_items():
-    params = _API_QUERY_PARAMS | {'cards': 'open'}
+    params = get_api_query_params() | {'cards': 'open'}
     res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=params)
 
     if not res.ok:
@@ -21,7 +22,7 @@ def add_item(title):
     list_id = get_list_id('To Do')
     
     # Add card to the To-Do list
-    params = _API_QUERY_PARAMS | {'name': title, 'idList': list_id}
+    params = get_api_query_params() | {'name': title, 'idList': list_id}
     res = requests.post(f'{_BASE_URL}/1/cards', params=params)
 
     if not res.ok:
@@ -30,7 +31,7 @@ def add_item(title):
 def start_item(id):
     list_id = get_list_id('Doing')
 
-    params = _API_QUERY_PARAMS | {'idList': list_id}
+    params = get_api_query_params() | {'idList': list_id}
     res = requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
 
     if not res.ok:
@@ -41,21 +42,21 @@ def complete_item(id):
     list_id = get_list_id('Done')
 
     # Move card to Done list
-    params = _API_QUERY_PARAMS | {'idList': list_id}
+    params = get_api_query_params() | {'idList': list_id}
     res = requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
 
     if not res.ok:
         raise ApiException("Error completing to-do item")
 
 def delete_item(id):
-    res = requests.delete(f'{_BASE_URL}/1/cards/{id}', params=_API_QUERY_PARAMS)
+    res = requests.delete(f'{_BASE_URL}/1/cards/{id}', params=get_api_query_params())
 
     if not res.ok:
         raise ApiException("Error deleting to-do item")
 
 
 def get_list_id(list_name):
-    res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=_API_QUERY_PARAMS)
+    res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=get_api_query_params())
 
     if not res.ok:
         raise ApiException("Error getting to-do items")

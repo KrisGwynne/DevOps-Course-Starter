@@ -32,7 +32,6 @@ def create_app():
             flash(err.message, "error")
 
         return redirect("/")
-        return render_template("index.html", view_model=item_view_model)
 
     @app.route('/items/<id>/start', methods=['POST'])
     def start_item(id):
