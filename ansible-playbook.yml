@@ -1,0 +1,51 @@
+- name: Install To-Do App on new web server
+  hosts: todo-app-group
+  remote_user: ec2-user
+  vars_prompt:
+  - name: api_key
+    prompt: api key?
+  - name: api_token
+    prompt: api_token?
+  - name: organisation_id
+    prompt: organisation_id?
+  - name: board_id
+    prompt: board_id?
+
+
+  tasks:
+  #TODO: install python 3.9
+  - name: Install Git and Python 3
+    ansible.builtin.yum:
+      name: 
+      - git
+      - python3
+      state: present
+    become: yes
+
+  - name: Install Poetry
+    ansible.builtin.shell:
+      cmd: curl -sSL https://install.python-poetry.org | python3 -
+      creates: ~/.local/bin/poetry
+
+  - name: Create To-Do App directory
+    ansible.builtin.file:
+      path: /opt/todoapp
+      state: directory
+      mode: '777'
+    become: yes
+
+  - name: Get latest To-Do App from Git
+    ansible.builtin.git:
+      repo: https://github.com/KrisGwynne/DevOps-Course-Starter
+      dest: /opt/todoapp
+      version: main
+
+  - name: Install project dependencies
+    ansible.builtin.command:
+      cmd: ~/.local/bin/poetry install
+      chdir: /opt/todoapp
+
+  - name: Create .env file
+    ansible.builtin.template:
+      src: .env.j2
+      dest: /opt/todoapp/.env
