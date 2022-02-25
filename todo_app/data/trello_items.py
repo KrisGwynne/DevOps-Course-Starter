@@ -9,7 +9,8 @@ def get_api_query_params():
     return {'key': os.getenv("API_KEY"), 'token': os.getenv("API_TOKEN")}
 
 def get_items():
-    params = get_api_query_params() | {'cards': 'open'}
+    params = {'cards': 'open'}
+    params.update(get_api_query_params())
     res = requests.get(f'{_BASE_URL}/1/boards/{os.getenv("BOARD_ID")}/lists', params=params)
 
     if not res.ok:
@@ -22,7 +23,8 @@ def add_item(title):
     list_id = get_list_id('To Do')
     
     # Add card to the To-Do list
-    params = get_api_query_params() | {'name': title, 'idList': list_id}
+    params = {'name': title, 'idList': list_id}
+    params.update(get_api_query_params())
     res = requests.post(f'{_BASE_URL}/1/cards', params=params)
 
     if not res.ok:
@@ -31,7 +33,8 @@ def add_item(title):
 def start_item(id):
     list_id = get_list_id('Doing')
 
-    params = get_api_query_params() | {'idList': list_id}
+    params = {'idList': list_id}
+    params.update(get_api_query_params())
     res = requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
 
     if not res.ok:
@@ -42,7 +45,8 @@ def complete_item(id):
     list_id = get_list_id('Done')
 
     # Move card to Done list
-    params = get_api_query_params() | {'idList': list_id}
+    params = {'idList': list_id}
+    params.update(get_api_query_params())
     res = requests.put(f'{_BASE_URL}/1/cards/{id}', params=params)
 
     if not res.ok:
