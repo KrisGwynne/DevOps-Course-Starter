@@ -5,27 +5,26 @@
   - name: api_key
     prompt: api key?
   - name: api_token
-    prompt: api_token?
+    prompt: api token?
   - name: organisation_id
-    prompt: organisation_id?
+    prompt: organisation id?
   - name: board_id
-    prompt: board_id?
+    prompt: board id?
 
 
   tasks:
-  #TODO: install python 3.9
   - name: Install Git and Python 3
     ansible.builtin.yum:
       name: 
       - git
-      - python3
+      - python
       state: present
     become: yes
 
   - name: Install Poetry
     ansible.builtin.shell:
-      cmd: curl -sSL https://install.python-poetry.org | python3 -
-      creates: ~/.local/bin/poetry
+      cmd: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      creates: ~/.poetry/bin/poetry
 
   - name: Create To-Do App directory
     ansible.builtin.file:
@@ -38,14 +37,26 @@
     ansible.builtin.git:
       repo: https://github.com/KrisGwynne/DevOps-Course-Starter
       dest: /opt/todoapp
-      version: main
+      version: exercise-4
 
   - name: Install project dependencies
     ansible.builtin.command:
-      cmd: ~/.local/bin/poetry install
+      cmd: ~/.poetry/bin/poetry install
       chdir: /opt/todoapp
 
   - name: Create .env file
     ansible.builtin.template:
       src: .env.j2
       dest: /opt/todoapp/.env
+      chdir: /opt/todoapp
+
+  - name: Copy systemd task to start To-Do App
+    ansible.builtin.command:
+      cmd: cp /opt/todoapp/todoapp.service /etc/systemd/system/todoapp.service
+    become: yes
+
+  - name: Run systemd task
+    ansible.builtin.systemd:
+      state: restarted
+      name: todoapp
+    become: yes
