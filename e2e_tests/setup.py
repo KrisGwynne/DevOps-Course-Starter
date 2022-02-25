@@ -7,10 +7,10 @@ from selenium import webdriver
 from dotenv import load_dotenv, find_dotenv
 
 def create_e2e_trello_board():
-    _API_QUERY_PARAMS = {'key': os.environ.get("API_KEY"), 'token': os.environ.get("API_TOKEN")}
+    params = {'key': os.environ.get("API_KEY"), 'token': os.environ.get("API_TOKEN")}
     board_name = 'e2e_board'
     organisation_id = os.environ.get("ORGANISATION_ID")
-    params = _API_QUERY_PARAMS | {'name': board_name, 'idOrganization': organisation_id}
+    params.update({'name': board_name, 'idOrganization': organisation_id})
     requests.post('https://api.trello.com/1/boards', params=params)
 
     res = requests.get(f'https://api.trello.com/1/organizations/{organisation_id}/boards', params=_API_QUERY_PARAMS)
