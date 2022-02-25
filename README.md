@@ -64,3 +64,9 @@ $ poetry run pytest view_models/item_view_model_test.py -k 'test_getting_to_do_i
 ```
 ### E2e Tests
 This repo contains e2e selenium tests. In order to run the tests you must firt ensure that you have firefox installed along with geckodriver to allow selenium to control it. The e2e tests can be found in the e2e_tests diectory. The e2e tests set up a new testing board in trello. In order to allow this to happen you need to add the value of `ORGANISATION_ID` to your .env file.
+
+### Running the ansible playbook
+The ansible playbook can be used to deploy and run the todo app on virtual environments included in the ansible-inventory. The playbook can be run using the following command:
+```bash
+$ ansible-playbook ansible-playbook.yml -i ansible-inventory 
+```
