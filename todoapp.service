@@ -2,6 +2,6 @@
 Description=My To-Do App
 
 [Service]
-User=ec2-user
+User=root
 WorkingDirectory=/opt/todoapp
 ExecStart=/home/ec2-user/.poetry/bin/poetry run flask run --host=0.0.0.0 --port=80
