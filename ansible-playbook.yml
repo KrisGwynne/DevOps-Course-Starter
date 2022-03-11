@@ -37,7 +37,7 @@
     ansible.builtin.git:
       repo: https://github.com/KrisGwynne/DevOps-Course-Starter
       dest: /opt/todoapp
-      version: exercise-4
+      version: main
 
   - name: Install project dependencies
     ansible.builtin.command:
