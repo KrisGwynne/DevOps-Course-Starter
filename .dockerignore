@@ -1,0 +1,13 @@
+.github
+.pytest_cache
+.venv
+.vscode
+.env
+.env.j2
+.env.template
+.gitignore
+ansible-inventory
+ansible-playbook.yml
+geckodriver.log
+README.md
+todoapp.service

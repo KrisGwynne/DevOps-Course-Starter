@@ -52,6 +52,20 @@ You should see output similar to the following:
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
+## Docker
+You can also run the app in docker, for both development and production. To do this you must first build the docker image (changing the target and tag to the correct environment):
+```bash
+docker build --target <production|development> --tag todo-app:<prod|dev> . 
+```
+You can then run the docker image eg:
+```bash
+docker run -p 5000:8080 --env-file ./.env  todo-app:<prod|dev>
+```
+In order to run the app in docker during local development you can mount the project files, so that flask will hot reload when changes are made:
+```bash
+docker run -p 5000:8080 --env-file ./.env --mount type=bind,source=(pwd)/todo_app,target=/src/todo_app  todo-app:dev 
+```
+
 ## Testing
 The repo contains a testing directory under `./tests`, using the pytest library. To run the tests ensure you are in the tests directory and run:
 ```bash
