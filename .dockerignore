@@ -11,3 +11,4 @@ ansible-playbook.yml
 geckodriver.log
 README.md
 todoapp.service
+Dockerfile
