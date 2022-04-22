@@ -84,3 +84,6 @@ The ansible playbook can be used to deploy and run the todo app on virtual envir
 ```bash
 $ ansible-playbook ansible-playbook.yml -i ansible-inventory 
 ```
+
+## Sytem Archetecture
+Diagrams of the system architecture can be found in `/documentation` directory. The diagrams follow the [c4 Model](https://c4model.com/), and can be edited using [this web app](https://app.diagrams.net/).
