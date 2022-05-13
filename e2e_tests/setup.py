@@ -4,6 +4,7 @@ import pytest
 from threading import Thread
 from todo_app import app
 from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
 from dotenv import load_dotenv, find_dotenv
 
 def create_e2e_trello_board():
@@ -13,6 +14,7 @@ def create_e2e_trello_board():
     params.update({'name': board_name, 'idOrganization': organisation_id})
     requests.post('https://api.trello.com/1/boards', params=params)
 
+    _API_QUERY_PARAMS = {'key': os.environ.get("API_KEY"), 'token': os.environ.get("API_TOKEN")}
     res = requests.get(f'https://api.trello.com/1/organizations/{organisation_id}/boards', params=_API_QUERY_PARAMS)
 
     return next(board['id'] for board in res.json() if board['name'] == board_name)
@@ -41,6 +43,8 @@ def app_with_temp_board():
 
 @pytest.fixture(scope="module")
 def driver():
-    with webdriver.Firefox() as driver:
-        driver.implicitly_wait(10)
+    opts = FirefoxOptions()
+    opts.add_argument("--headless")
+    with webdriver.Firefox(options=opts) as driver:
+        driver.implicitly_wait(1000)
         yield driver
