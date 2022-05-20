@@ -1,5 +1,8 @@
 name: Continuous Integration
-on: [push]
+on: [push, pull_request]
+paths-ignore:
+ - '**.md'
+ - 'documentation/**'
 jobs: 
   build:
     name: Build and test
