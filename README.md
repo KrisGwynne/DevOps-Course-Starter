@@ -87,3 +87,7 @@ $ ansible-playbook ansible-playbook.yml -i ansible-inventory
 
 ## Sytem Archetecture
 Diagrams of the system architecture can be found in `/documentation` directory. The diagrams follow the [c4 Model](https://c4model.com/), and can be edited using [this web app](https://app.diagrams.net/).
+## CI/CD
+The app has a CI/CD github actions pipeline to test and deploy the app. 
+* On every branch, pushes and pull requests will run all of the tests
+* On pushes to the main branch, all of the tests will run, and if there are no failures the app image will be published to Docker Hub and deployed to heroku at http://devops-kris-todo-app.herokuapp.com/
