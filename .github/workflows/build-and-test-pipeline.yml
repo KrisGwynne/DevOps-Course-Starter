@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build --target test --tag todo-app:test .
-    - run: docker run -e API_KEY=${{ secrets.TRELLO_API_KEY }} -e API_TOKEN=${{ secrets.TRELLO_API_TOKEN }} -e ORGANISATION_ID=${{ secrets.ORGANISATION_ID }} todo-app:test
+    - run: docker run -e API_KEY=${{ secrets.TRELLO_API_KEY }} -e API_TOKEN=${{ secrets.TRELLO_API_TOKEN }} -e ORGANISATION_ID=${{ secrets.ORGANISATION_ID }} -e SECRET_KEY=${{ secrets.SECRET_KEY }} todo-app:test
