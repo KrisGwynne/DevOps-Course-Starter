@@ -1,3 +1,4 @@
+from time import sleep
 import requests
 import os
 import pytest
@@ -36,6 +37,8 @@ def app_with_temp_board():
     thread = Thread(target=lambda: application.run(use_reloader=False))
     thread.daemon = True
     thread.start()
+    # Ensure the application is running before running the tests
+    sleep(1)
     yield application
     # Tear Down
     thread.join(1)
