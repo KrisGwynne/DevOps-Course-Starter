@@ -1,8 +1,13 @@
 name: Continuous Integration
-on: [push, pull_request]
-paths-ignore:
- - '**.md'
- - 'documentation/**'
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'documentation/**'
 jobs: 
   build:
     name: Build and test
@@ -10,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build --target test --tag todo-app:test .
-    - run: docker run todo-app:test tests
+    - run: docker run todo-app:test
