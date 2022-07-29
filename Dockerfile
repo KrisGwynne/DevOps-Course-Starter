@@ -34,5 +34,6 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
 
 COPY ./tests ./tests
 COPY ./e2e_tests ./e2e_tests
+COPY .env.test .env.test
 
 ENTRYPOINT ["poetry", "run", "pytest"]
