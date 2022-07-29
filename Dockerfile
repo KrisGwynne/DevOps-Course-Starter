@@ -10,7 +10,7 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install
 
 # Copy over the rest of the application code
-COPY . .
+COPY ./todo_app ./todo_app
 
 EXPOSE 8080
 
@@ -31,5 +31,8 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
    && tar zxf geckodriver-*.tar.gz \
    && mv geckodriver /usr/bin/ \
    && rm geckodriver-*.tar.gz
+
+COPY ./tests ./tests
+COPY ./e2e_tests ./e2e_tests
 
 ENTRYPOINT ["poetry", "run", "pytest"]
