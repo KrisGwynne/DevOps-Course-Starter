@@ -1,4 +1,4 @@
-from .setup import driver, app_with_temp_board
+from e2e_tests.setup import driver, app_with_temp_board
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys

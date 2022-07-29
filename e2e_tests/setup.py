@@ -49,5 +49,5 @@ def driver():
     opts = FirefoxOptions()
     opts.add_argument("--headless")
     with webdriver.Firefox(options=opts) as driver:
-        driver.implicitly_wait(1000)
+        driver.implicitly_wait(10)
         yield driver
