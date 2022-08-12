@@ -8,8 +8,6 @@ on:
     paths-ignore:
       - '**.md'
       - 'documentation/**'
-env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 jobs: 
   build:
     name: Build and test
@@ -20,7 +18,7 @@ jobs:
     - run: docker run todo-app:test tests
     - run: docker run -e API_KEY=${{ secrets.TRELLO_API_KEY }} -e API_TOKEN=${{ secrets.TRELLO_API_TOKEN }} -e ORGANISATION_ID=${{ secrets.ORGANISATION_ID }} -e SECRET_KEY=${{ secrets.SECRET_KEY }} todo-app:test e2e_tests
   publish: 
-    name: Publish and Deploy to Heroku
+    name: Publish and Deploy to Azure
     runs-on: ubuntu-latest
     needs: build
     # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -29,7 +27,5 @@ jobs:
       - run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - run: docker build --target production --tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest .
       - run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
-      - run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest registry.heroku.com/devops-kris-todo-app/web
-      - run: heroku container:login
-      - run: docker push registry.heroku.com/devops-kris-todo-app/web
-      - run: heroku container:release web -a devops-kris-todo-app
+      - run: curl -dH -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
+
