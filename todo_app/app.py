@@ -16,7 +16,7 @@ def create_app():
     def index():
         items = []
         try:
-            items = trello.get_items()
+            items = itemService.get_items()
         except ApiException as err:
             flash(err.message, "error")
 
