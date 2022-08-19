@@ -38,7 +38,7 @@ def create_app():
     @app.route('/items/<id>/start', methods=['POST'])
     def start_item(id):
         try:
-            trello.start_item(id)
+            itemService.start_item(id)
             flash("Started to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")

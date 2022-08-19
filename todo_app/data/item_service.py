@@ -20,3 +20,6 @@ class ItemService:
             "status": "To Do"
         }
         self.item_collection.insert_one(new_item)
+
+    def start_item(self, id):
+        self.item_collection.update_one({ "_id": id}, { "$set": { "status": "Doing"}})
