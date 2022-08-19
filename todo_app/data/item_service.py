@@ -26,6 +26,9 @@ class ItemService:
 
     def complete_item(self, id):
         self.__update_item_status(id, "Done")
+
+    def delete_item(self, id):
+        self.item_collection.delete_one({ "_id": id })
         
     def __update_item_status(self, id, status):
-        self.item_collection.update_one({ "_id": id}, { "$set": { "status": status }})
+        self.item_collection.update_one({ "_id": id }, { "$set": { "status": status }})

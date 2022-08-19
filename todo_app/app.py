@@ -58,7 +58,7 @@ def create_app():
     @app.route('/items/delete/<id>', methods=['POST'])
     def delete_item(id):
         try:
-            trello.delete_item(id)
+            itemService.delete_item(id)
             flash("Deleted to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
