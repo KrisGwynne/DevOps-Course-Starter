@@ -48,7 +48,7 @@ def create_app():
     @app.route('/items/<id>/complete', methods=['POST'])
     def complete_item(id):
         try:
-            trello.complete_item(id)
+            itemService.complete_item(id)
             flash("Completed to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")

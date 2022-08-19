@@ -22,4 +22,10 @@ class ItemService:
         self.item_collection.insert_one(new_item)
 
     def start_item(self, id):
-        self.item_collection.update_one({ "_id": id}, { "$set": { "status": "Doing"}})
+        self.__update_item_status(id, "Doing")
+
+    def complete_item(self, id):
+        self.__update_item_status(id, "Done")
+        
+    def __update_item_status(self, id, status):
+        self.item_collection.update_one({ "_id": id}, { "$set": { "status": status }})
