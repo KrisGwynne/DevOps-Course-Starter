@@ -12,6 +12,7 @@ requests = "^2.26.0"
 pytest = "^6.2.5"
 selenium = "^4.1.0"
 gunicorn = "^20.1.0"
+pymongo = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 
