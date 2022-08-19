@@ -28,7 +28,7 @@ def create_app():
     def add_item():
         title = request.form.get("item_title")
         try:
-            trello.add_item(title)
+            itemService.add_item(title)
             flash("Added new to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
