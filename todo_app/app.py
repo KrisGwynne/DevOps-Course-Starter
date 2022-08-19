@@ -1,7 +1,6 @@
 from flask import Flask, redirect, render_template, request
 from flask.helpers import flash
 from todo_app.data.item_service import ItemService
-import todo_app.data.trello_items as trello
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
 from todo_app.view_models.item_view_model import ItemViewModel
