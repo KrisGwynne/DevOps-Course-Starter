@@ -1,7 +1,7 @@
 FROM python:3.7-bullseye as base
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-ENV PATH="/root/.poetry/bin/:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH="/root/.local/bin/:$PATH"
 
 WORKDIR /src
 
