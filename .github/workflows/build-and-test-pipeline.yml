@@ -27,5 +27,5 @@ jobs:
       - run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - run: docker build --target production --tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest .
       - run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
-      - run: curl -dH -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
+      - run: curl --fail -dH -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
 
