@@ -15,7 +15,7 @@ def check_authorisation(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         login_disabled = current_app.config["LOGIN_DISABLED"]
-        if((not login_disabled) and current_user.getRole() != 'writer'):
+        if((not login_disabled) and current_user.get_role() != 'writer'):
             flash("You are not authorised to do this action", "error")
             return redirect('/')
         return f(*args, **kwargs)
@@ -49,7 +49,7 @@ def create_app():
             flash(err.message, "error")
 
         sorted_items = sorted(items, key=lambda item: item.status, reverse=True)
-        item_view_model = ItemViewModel(sorted_items)
+        item_view_model = ItemViewModel(sorted_items, current_user.get_role())
         return render_template("index.html", view_model=item_view_model)
 
     @app.route('/item', methods=['POST'])

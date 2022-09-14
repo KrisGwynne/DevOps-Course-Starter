@@ -8,5 +8,5 @@ class User(UserMixin):
     def __init__(self, id):
         self.id = id
 
-    def getRole(self):
+    def get_role(self):
         return user_role_map.get(self.id, 'reader')
