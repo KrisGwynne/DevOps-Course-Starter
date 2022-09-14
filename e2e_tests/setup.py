@@ -19,6 +19,7 @@ def app_with_temp_board():
     # Mongo will create a new db for e2e tests when creating new documents
     e2e_database_name = 'todo-app-e2e'
     os.environ['DATABASE_NAME'] = e2e_database_name
+    os.environ['LOGIN_DISABLED'] = 'True'
     # construct the new application
     application = app.create_app()
     # start the app in its own thread.
