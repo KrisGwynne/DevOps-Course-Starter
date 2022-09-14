@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request
 from flask.helpers import flash
-import todo_app.data.trello_items as trello
+from todo_app.data.item_service import ItemService
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
 from todo_app.view_models.item_view_model import ItemViewModel
@@ -9,12 +9,13 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config())
 
+    itemService = ItemService()
 
     @app.route('/')
     def index():
         items = []
         try:
-            items = trello.get_items()
+            items = itemService.get_items()
         except ApiException as err:
             flash(err.message, "error")
 
@@ -26,7 +27,7 @@ def create_app():
     def add_item():
         title = request.form.get("item_title")
         try:
-            trello.add_item(title)
+            itemService.add_item(title)
             flash("Added new to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
@@ -36,7 +37,7 @@ def create_app():
     @app.route('/items/<id>/start', methods=['POST'])
     def start_item(id):
         try:
-            trello.start_item(id)
+            itemService.start_item(id)
             flash("Started to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
@@ -46,7 +47,7 @@ def create_app():
     @app.route('/items/<id>/complete', methods=['POST'])
     def complete_item(id):
         try:
-            trello.complete_item(id)
+            itemService.complete_item(id)
             flash("Completed to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")
@@ -56,7 +57,7 @@ def create_app():
     @app.route('/items/delete/<id>', methods=['POST'])
     def delete_item(id):
         try:
-            trello.delete_item(id)
+            itemService.delete_item(id)
             flash("Deleted to-do item", "success")
         except ApiException as err:
             flash(err.message, "error")

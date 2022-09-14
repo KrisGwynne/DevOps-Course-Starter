@@ -32,7 +32,7 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-In order to add all the required environment variables needed to run the project you must first create a Trello account [here](https://trello.com/signup). After creating an account you will then be able to generate an API key and token following the instructions [here](https://trello.com/app-key). Ask a member of the team to give you access to the board, and the value for the `BOARD_ID` environment variable.
+In order to add all the required environment variables needed to run the project you will first need to ask a member of the team to give you access to the mongo-db database and give you the value for the `CONNECTION_STRING` and `DATABASE_NAME` environment variables.
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
@@ -77,7 +77,7 @@ To run an individual test run the above command with the path to the test and th
 $ poetry run pytest view_models/item_view_model_test.py -k 'test_getting_to_do_items_returns_only_to_do_items'
 ```
 ### E2e Tests
-This repo contains e2e selenium tests. In order to run the tests you must firt ensure that you have firefox installed along with geckodriver to allow selenium to control it. The e2e tests can be found in the e2e_tests diectory. The e2e tests set up a new testing board in trello. In order to allow this to happen you need to add the value of `ORGANISATION_ID` to your .env file.
+This repo contains e2e selenium tests. In order to run the tests you must firt ensure that you have firefox installed along with geckodriver to allow selenium to control it. The e2e tests can be found in the e2e_tests diectory. The e2e tests set up a new db, which is removed at the end of the test run.
 
 ### Running the ansible playbook
 The ansible playbook can be used to deploy and run the todo app on virtual environments included in the ansible-inventory. The playbook can be run using the following command:
