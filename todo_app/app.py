@@ -1,13 +1,26 @@
-from flask import Flask, redirect, render_template, request
+from functools import wraps
+from flask import Flask, redirect, render_template, request, current_app
 from flask.helpers import flash
 from todo_app.data.item_service import ItemService
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
 from todo_app.models.User import User
 from todo_app.view_models.item_view_model import ItemViewModel
-from flask_login import LoginManager, login_required, login_user
+from flask_login import LoginManager, login_required, login_user, current_user
 import requests
 import os
+
+
+def check_authorisation(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        login_disabled = current_app.config["LOGIN_DISABLED"]
+        if((not login_disabled) and current_user.getRole() != 'writer'):
+            flash("You are not authorised to do this action", "error")
+            return redirect('/')
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 def create_app():
     app = Flask(__name__)
@@ -41,6 +54,7 @@ def create_app():
 
     @app.route('/item', methods=['POST'])
     @login_required
+    @check_authorisation
     def add_item():
         title = request.form.get("item_title")
         try:
@@ -53,6 +67,7 @@ def create_app():
 
     @app.route('/items/<id>/start', methods=['POST'])
     @login_required
+    @check_authorisation
     def start_item(id):
         try:
             itemService.start_item(id)
@@ -64,6 +79,7 @@ def create_app():
 
     @app.route('/items/<id>/complete', methods=['POST'])
     @login_required
+    @check_authorisation
     def complete_item(id):
         try:
             itemService.complete_item(id)
@@ -75,6 +91,7 @@ def create_app():
 
     @app.route('/items/delete/<id>', methods=['POST'])
     @login_required
+    @check_authorisation
     def delete_item(id):
         try:
             itemService.delete_item(id)
@@ -98,7 +115,7 @@ def create_app():
 
         user_res = requests.get("https://api.github.com/user", headers={ 'Authorization': f'Bearer {github_access_token}'})
         user = User(user_res.json()['id'])
-        
+
         login_user(user)
 
         return redirect('/')
