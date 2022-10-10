@@ -8,7 +8,7 @@ class TestItemViewModel:
         todo_item = Card(0, "title", "To Do")
         doing_item = Card(0, "title", "Doing")
         done_item = Card(1, "done", "Done")
-        model = ItemViewModel([todo_item, doing_item, done_item])
+        model = ItemViewModel([todo_item, doing_item, done_item], 'writer')
 
         # Act
         items = model.todo_items
@@ -21,7 +21,7 @@ class TestItemViewModel:
     @staticmethod
     def test_getting_to_do_items_when_empty_returns_empty_list():
         # Arrange
-        model = ItemViewModel([])
+        model = ItemViewModel([], 'writer')
 
         # Act
         items = model.todo_items
@@ -35,7 +35,7 @@ class TestItemViewModel:
         todo_item = Card(0, "title", "To Do")
         doing_item = Card(0, "title", "Doing")
         done_item = Card(1, "done", "Done")
-        model = ItemViewModel([todo_item, doing_item, done_item])
+        model = ItemViewModel([todo_item, doing_item, done_item], 'writer')
 
         # Act
         items = model.doing_items
@@ -48,7 +48,7 @@ class TestItemViewModel:
     @staticmethod
     def test_getting_doing_items_when_empty_returns_empty_list():
         # Arrange
-        model = ItemViewModel([])
+        model = ItemViewModel([], 'writer')
 
         # Act
         items = model.doing_items
@@ -62,7 +62,7 @@ class TestItemViewModel:
         todo_item = Card(0, "title", "To Do")
         doing_item = Card(0, "title", "Doing")
         done_item = Card(1, "done", "Done")
-        model = ItemViewModel([todo_item, doing_item, done_item])
+        model = ItemViewModel([todo_item, doing_item, done_item], 'writer')
 
         # Act
         items = model.done_items
@@ -75,7 +75,7 @@ class TestItemViewModel:
     @staticmethod
     def test_getting_done_items_when_empty_returns_empty_list():
         # Arrange
-        model = ItemViewModel([])
+        model = ItemViewModel([], 'writer')
 
         # Act
         items = model.done_items

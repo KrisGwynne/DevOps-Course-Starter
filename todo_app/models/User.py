@@ -1,4 +1,4 @@
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 
 user_role_map = {
     '58691426': 'writer'
@@ -10,3 +10,10 @@ class User(UserMixin):
 
     def get_role(self):
         return user_role_map.get(self.id, 'reader')
+
+class AnonymousUser(AnonymousUserMixin):
+    def __init__(self):
+        pass
+    
+    def get_role(self):
+        return 'reader'

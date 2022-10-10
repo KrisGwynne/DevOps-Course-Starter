@@ -4,7 +4,7 @@ from flask.helpers import flash
 from todo_app.data.item_service import ItemService
 from todo_app.flask_config import Config
 from todo_app.models.ApiException import ApiException
-from todo_app.models.User import User
+from todo_app.models.User import AnonymousUser, User
 from todo_app.view_models.item_view_model import ItemViewModel
 from flask_login import LoginManager, login_required, login_user, current_user
 import requests
@@ -28,6 +28,7 @@ def create_app():
 
     itemService = ItemService()
     login_manager = LoginManager()
+    login_manager.anonymous_user = AnonymousUser
 
     @login_manager.unauthorized_handler
     def unauthenticated():
