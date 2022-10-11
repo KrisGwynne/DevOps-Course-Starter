@@ -16,4 +16,4 @@ class AnonymousUser(AnonymousUserMixin):
         pass
     
     def get_role(self):
-        return 'reader'
+        return 'writer'
