@@ -9,14 +9,19 @@ on:
       - '**.md'
       - 'documentation/**'
 jobs: 
-  build:
-    name: Build and test
+  # build:
+  #   name: Build and test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - run: docker build --target test --tag todo-app:test .
+  #   - run: docker run todo-app:test tests
+  #   - run: docker run -e CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" -e SECRET_KEY=${{ secrets.SECRET_KEY }} -e LOGIN_DISABLED=True todo-app:test e2e_tests
+  terraform:
+    name: Run terraform to create Azure resources
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: docker build --target test --tag todo-app:test .
-    - run: docker run todo-app:test tests
-    - run: docker run -e CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" -e SECRET_KEY=${{ secrets.SECRET_KEY }} -e LOGIN_DISABLED=True todo-app:test e2e_tests
+    - run: terraform init
   publish: 
     name: Publish and Deploy to Azure
     runs-on: ubuntu-latest

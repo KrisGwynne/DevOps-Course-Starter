@@ -5,6 +5,12 @@ terraform {
       version = ">= 2.92"
     }
   }
+  backend "azurerm" {
+    resource_group_name = "softwire21_krisgwynne_projectexercise"
+    storage_account_name = "kristfstate"
+    container_name = "tfstate"
+    key = "terraform.key"
+  }
 }
 
 provider "azurerm" {
