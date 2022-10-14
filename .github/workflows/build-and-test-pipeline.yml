@@ -19,18 +19,24 @@ jobs:
   #   - run: docker run -e CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" -e SECRET_KEY=${{ secrets.SECRET_KEY }} -e LOGIN_DISABLED=True todo-app:test e2e_tests
   terraform:
     name: Run terraform to create Azure resources
+    env: 
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - run: terraform init
-  publish: 
-    name: Publish and Deploy to Azure
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      - run: docker build --target production --tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest .
-      - run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
-      - run: curl --fail -dH -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
+  # publish: 
+  #   name: Publish and Deploy to Azure
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+  #     - run: docker build --target production --tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest .
+  #     - run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+  #     - run: curl --fail -dH -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
 
